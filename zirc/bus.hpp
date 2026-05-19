@@ -25,13 +25,13 @@ class Bus {
 	};
 	Bus() { reset(); }
 
-	void addApu(Apu *apu) { m_apu = apu; }
-	void addCartridge(Cartridge *cartridge) { m_cartridge = cartridge; }
-	void addCpu(Cpu *cpu) { m_cpu = cpu; }
-	void addJoypad(Joypad *joypad) { m_joypad = joypad; }
-	void addMemory(Memory *memory) { m_memory = memory; }
-	void addPpu(Ppu *ppu) { m_ppu = ppu; }
-	void addTimer(Timer *timer) { m_timer = timer; }
+	inline void addApu(Apu *apu) { m_apu = apu; }
+	inline void addCartridge(Cartridge *cartridge) { m_cartridge = cartridge; }
+	inline void addCpu(Cpu *cpu) { m_cpu = cpu; }
+	inline void addJoypad(Joypad *joypad) { m_joypad = joypad; }
+	inline void addMemory(Memory *memory) { m_memory = memory; }
+	inline void addPpu(Ppu *ppu) { m_ppu = ppu; }
+	inline void addTimer(Timer *timer) { m_timer = timer; }
 
 	void doDmaTransfer(void);
 
@@ -43,9 +43,9 @@ class Bus {
 
 	void requestInterrupt(InterruptRequestType interruptType);
 
-	bool introEnded() const { return m_introEnded; }
+	inline bool introEnded() const { return m_introEnded; }
 
-	void reset() {
+	inline void reset() {
 		m_introEnded = false;
 		m_oamSourceAndStart = 0;
 	}

@@ -8,7 +8,7 @@ class Joypad {
   public:
 	Joypad() { reset(); }
 
-	void write8(const uint8_t value) {
+	inline void write8(const uint8_t value) {
 		uint8_t outputBits = value & 0x30;
 		if(outputBits == 0x30) {
 			m_selectedOutput = SelectedOutput::None;
@@ -19,7 +19,7 @@ class Joypad {
 		}
 	}
 
-	uint8_t read8() const {
+	inline uint8_t read8() const {
 		switch(m_selectedOutput) {
 		case SelectedOutput::Buttons: return 0x30 | (static_cast<uint8_t>(m_buttons.to_ulong()) & 0xF); break;
 		case SelectedOutput::DPad: return 0x30 | (static_cast<uint8_t>(m_dPad.to_ulong()) & 0xF); break;
@@ -29,10 +29,10 @@ class Joypad {
 
 	enum class Key { A, B, Select, Start, Right, Left, Up, Down };
 
-	void handleKeyDown(Key key) { handleKey(key, false); }
-	void handleKeyUp(Key key) { handleKey(key, true); }
+	inline void handleKeyDown(Key key) { handleKey(key, false); }
+	inline void handleKeyUp(Key key) { handleKey(key, true); }
 
-	void reset() {
+	inline void reset() {
 		m_buttons = 0xF;
 		m_dPad = 0xF;
 
@@ -42,7 +42,7 @@ class Joypad {
   private:
 	enum SelectedOutput { None = 0, Buttons, DPad };
 
-	void handleKey(Key key, bool isKeyUp) {
+	inline void handleKey(Key key, bool isKeyUp) {
 		uint8_t keyValue = static_cast<uint8_t>(key);
 		if(keyValue & 0b100) {
 			m_dPad.set(keyValue & 0b11, isKeyUp);

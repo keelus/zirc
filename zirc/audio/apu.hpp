@@ -2,14 +2,15 @@
 
 #include <cassert>
 #include <cstdint>
+#include <iomanip>
 #include <iostream>
 
 #include "../common.hpp"
 #include "../platform.hpp"
-#include "channel1.hpp"
-#include "channel2.hpp"
-#include "channel3.hpp"
-#include "channel4.hpp"
+#include "channels/channel1/channel1.hpp"
+#include "channels/channel2/channel2.hpp"
+#include "channels/channel3/channel3.hpp"
+#include "channels/channel4/channel4.hpp"
 
 namespace Zirc {
 #define APU_RATE (1 << 20)

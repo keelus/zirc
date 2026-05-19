@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cstdint>
-#include <fstream>
 #include <memory>
 
 #include "audio/apu.hpp"
@@ -31,53 +30,27 @@ class GameBoy {
 	}
 
 	void start(void);
-	void debugCartridge(void) const { m_cartridge->debug(); }
-
 	int tick();
-	void dump(void) { m_cpu.dump(); }
+	void reset();
 
-	void handleKeydown(Joypad::Key key) { m_joypad.handleKeyDown(key); }
-	void handleKeyup(Joypad::Key key) { m_joypad.handleKeyUp(key); }
+	inline bool introEnded() const { return m_bus.introEnded(); }
 
-	bool introEnded() const { return m_bus.introEnded(); }
-
-	void reset() {
-		m_apu.reset();
-		m_bus.reset();
-		m_cpu.reset();
-		m_joypad.reset();
-		m_lcd.resetScreenX();
-		m_memory.reset();
-		m_ppu.reset();
-		m_timer.reset();
-		m_cartridge->reset();
-
-		m_prevDiv = 0;
-	}
-
-	void loadCustomBootRom(const std::string &bootRomPath) {
-		std::ifstream bootRomFile(bootRomPath, std::ios::binary | std::ios::ate);
-		if(!bootRomFile) { throw std::runtime_error("Could not open the custom boot ROM file."); }
-
-		std::streamsize bootRomSize = bootRomFile.tellg();
-		if(bootRomSize != 256) { throw std::runtime_error("The boot ROM's size must be exactly 256 bytes long."); }
-
-		std::array<char, 256> bootRom;
-		bootRomFile.seekg(0, std::ios::beg);
-		if(!bootRomFile.read(bootRom.data(), 256)) {
-			throw std::runtime_error("Failed to read from the custom boot ROM file.");
-		}
-
-		m_cartridge->setCustomBootRom(reinterpret_cast<uint8_t *>(bootRom.data()));
-	}
-
+	void loadCustomBootRom(const std::string &bootRomPath);
 	void disableCustomBootRom() { m_cartridge->disableCustomBootRom(); }
+
+	inline void handleKeydown(Joypad::Key key) { m_joypad.handleKeyDown(key); }
+	inline void handleKeyup(Joypad::Key key) { m_joypad.handleKeyUp(key); }
+
+	inline void debugCartridge(void) const { m_cartridge->debug(); }
+	inline void dump(void) { m_cpu.dump(); }
 
 	static constexpr float FRAMES_PER_SECOND = 59.7f;
 	static constexpr float CYCLES_PER_FRAME = (Cpu::CLOCK_SPEED / FRAMES_PER_SECOND);
 	static constexpr float MS_PER_FRAME = 1 / FRAMES_PER_SECOND * 1000;
 
   private:
+	uint16_t m_prevDiv = 0;
+
 	Apu m_apu;
 	Bus m_bus;
 	Cpu m_cpu;
@@ -87,7 +60,5 @@ class GameBoy {
 	Ppu m_ppu;
 	Timer m_timer;
 	std::unique_ptr<Cartridge> m_cartridge;
-
-	uint16_t m_prevDiv = 0;
 };
 } // namespace Zirc

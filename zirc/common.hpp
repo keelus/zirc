@@ -14,9 +14,9 @@ class Color {
 		m_blue = blue;
 	}
 
-	uint8_t red() const { return m_red; }
-	uint8_t green() const { return m_green; }
-	uint8_t blue() const { return m_blue; }
+	inline uint8_t red() const { return m_red; }
+	inline uint8_t green() const { return m_green; }
+	inline uint8_t blue() const { return m_blue; }
 
   private:
 	uint8_t m_red = 0;

@@ -5,7 +5,7 @@
 namespace Zirc {
 class Lfsr {
   public:
-	void tick() {
+	inline void tick() {
 		uint16_t result = (m_currentState & 0x1) == ((m_currentState >> 1) & 0x1);
 
 		m_currentState &= static_cast<uint16_t>(~(1 << 15));
@@ -19,12 +19,12 @@ class Lfsr {
 		m_currentState >>= 1;
 	}
 
-	void reset() { m_currentState = 0x7FF; }
+	inline void reset() { m_currentState = 0x7FF; }
 
-	uint8_t getBit() const { return m_currentState & 0x1; }
+	inline uint8_t getBit() const { return m_currentState & 0x1; }
 
-	void setShortMode() { m_isShortMode = true; }
-	void setLongMode() { m_isShortMode = false; }
+	inline void setShortMode() { m_isShortMode = true; }
+	inline void setLongMode() { m_isShortMode = false; }
 
   private:
 	bool m_isShortMode;

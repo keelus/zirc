@@ -108,7 +108,7 @@ class PlatformSdl2 : public Zirc::Platform {
 		int samples = len / sizeof(float);
 		float *buffer = (float *)stream;
 
-		memset(buffer, 0, len);
+		std::memset(buffer, 0, len);
 
 		for(size_t i = 0; i < samples; i++) {
 			if(!platform->m_audioSampleBuffer.popSample(buffer[i])) { buffer[i] = 0.0f; }

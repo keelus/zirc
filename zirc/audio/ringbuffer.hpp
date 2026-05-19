@@ -2,6 +2,7 @@
 
 #include <atomic>
 #include <cstddef>
+#include <cstring>
 
 namespace Zirc {
 template <std::size_t Size> class AudioRingBuffer {
@@ -30,7 +31,7 @@ template <std::size_t Size> class AudioRingBuffer {
 	}
 
 	void reset() {
-		memset(m_buffer, 0, sizeof(m_buffer));
+		std::memset(m_buffer, 0, sizeof(m_buffer));
 		m_head = 0;
 		m_tail = 0;
 	}

@@ -23,7 +23,7 @@ class Memory {
 	void write8(const uint16_t address, const uint8_t value);
 	void write16(const uint16_t address, const uint16_t value);
 
-	void reset() {
+	inline void reset() {
 		std::memset(m_wram, 0, sizeof(m_wram));
 		std::memset(m_hram, 0, sizeof(m_hram));
 	}
